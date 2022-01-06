@@ -22,16 +22,12 @@ using namespace std;
 double ln(double x){
     if(x == 0) return -INFINITY;
     if(x < 0) return NAN;
-    uint32_t denominator = 0;           // Denominator and current power
+    uint32_t denominator = 1;           // Denominator and current power
     double ans = 0;                     // Answer
     double base = (1.0 - x)/(1.0 + x);  // Base of series
     double squaredBase = base * base;   // Squared base for numerator calculation
     double numerator = base;            // Current numerator in current power
-    for(uint32_t i = 0; i < N; i++){
-        denominator = 1 + 2*i;
-        ans += numerator/denominator;
-        numerator *= squaredBase;
-    }
+    for(uint32_t i = 0; i < N; i++, ans += numerator/denominator, numerator *= squaredBase, denominator += 2){}
     ans *= -2;
     return ans;
 }
